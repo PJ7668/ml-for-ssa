@@ -58,6 +58,19 @@ def visualize_embedding(X, y, y_names=None):
         ax.yaxis.set_visible(False)
     plt.tight_layout()
 
+def normalize_features(X):
+    return (X - np.mean(X, keepdims=True)) / np.std(X, keepdims=True)
+
+def plot_confusion_matrix(model,X,y,title):
+    yhat = model.predict(normalize_features(X))
+    cm = confusion_matrix(y, np.argmax(yhat, axis=1))
+    a = pd.DataFrame(cm)
+    a.columns = names
+    a.index = names
+    acc = np.trace(cm)/np.sum(cm)
+    title_with_acc = '{} (acc: {:.3f})'.format(title, acc)
+    sns.heatmap(a, cmap=None, annot=True, linewidths=.1).set_title(title_with_acc)
+
 #################################################################
 # TLE DATA
 #################################################################

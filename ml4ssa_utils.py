@@ -61,7 +61,7 @@ def visualize_embedding(X, y, y_names=None):
 def normalize_features(X):
     return (X - np.mean(X, keepdims=True)) / np.std(X, keepdims=True)
 
-def plot_confusion_matrix(model,X,y,title):
+def plot_confusion_matrix(model,X,y,title,names):
     yhat = model.predict(normalize_features(X))
     cm = confusion_matrix(y, np.argmax(yhat, axis=1))
     a = pd.DataFrame(cm)
